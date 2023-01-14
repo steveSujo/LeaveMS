@@ -24,19 +24,15 @@ class DatabaseSeeder extends Seeder
 
         $emp->name = "tim";
         $emp->email = "tim@abc.com";
-        $emp->password = Hash::make("abc");
+        $emp->password = Hash::make("employee");
         $emp->save();
 
-        DB::table('admin')->insert([[
-            'name' => 'Steve',
-            'email' => 'steve@gmail.com',
-            'password' => Hash::make('admin'),
-        ], [
+        DB::table('admin')->insert([
 
             'name' => 'tim',
-            'email' => 'tim@gmail.com',
-            'password' => Hash::make('admin1'),
-        ]]);
+            'email' => 'admin@tim.com',
+            'password' => Hash::make('admin'),
+        ]);
         LeaveModel::create(
             [
                 'employee_id' => $emp->id,
