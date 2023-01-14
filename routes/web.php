@@ -17,9 +17,6 @@ use PHPUnit\TextUI\XmlConfiguration\Group;
 |
 */
 
-Route::get('/', function () {
-    return view('landing')->name('home');
-});
 
 // Route::get('dashboard', [CustomAuthController::class, 'dashboard'])->middleware('auth');
 // Route::get('Employeelogin', [CustomAuthController::class, 'index'])->name("login.emp");
@@ -28,6 +25,7 @@ Route::get('/', function () {
 // Route::get('logout', [CustomAuthController::class, 'logout'])->name("logout");
 
 Route::controller(CustomAuthController::class)->group(function () {
+    Route::get('/', 'index')->name('home');
     Route::get('login/user', 'index')->name('user.login');
     Route::get('login/admin', 'index')->name('admin.login');
     Route::post('login/auth/admin', 'AdminAuth')->name('login.admin');

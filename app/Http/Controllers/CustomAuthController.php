@@ -11,8 +11,10 @@ class CustomAuthController extends Controller
     {
         if ($request->route()->named('admin.login')) {
             return view('auth.AdminLogin');
+        } elseif ($request->route()->named('user.login')) {
+            return view('auth.EmployeeLogin');
         }
-        return view('auth.EmployeeLogin');
+        return view('landing');
     }
 
 
