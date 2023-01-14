@@ -8,6 +8,7 @@ A leave management system is a process within an organization that determines ho
 
 ## Technologies
 - Laravel Framework 8.83.0
+- PHP 8.0.1
 - MySQL
 
 
