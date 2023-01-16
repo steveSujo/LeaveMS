@@ -37,7 +37,7 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::prefix('/admin')->group(function () {
         Route::prefix('/dashboard')->group(function () {
             Route::controller(LeaveModelController::class)->group(function () {
-                Route::get('/', 'EmployeeList');
+                Route::get('/', 'EmployeeList')->name('adminHome');
                 Route::get('/leaveList', 'LeaveNotices')->name('leaveNotices');
                 Route::get('/leaveType', 'LeaveTypes')->name('leaveTypes');
                 Route::get('/employeeList', 'EmployeeList')->name('employeeList');
@@ -55,7 +55,7 @@ Route::middleware(['auth:admin'])->group(function () {
 
 Route::middleware(['auth:web'])->group(function () {
     Route::prefix('/user')->group(function () {
-        Route::get('/dashboard', [LeaveModelController::class, 'leaveDetails']);
+        Route::get('/dashboard', [LeaveModelController::class, 'leaveDetails'])->name("employeeHome");
         Route::get('/dashboard/leavedetails', [LeaveModelController::class, 'leaveDetails'])->name('leaveDetails');
         Route::post('/dashboard/applyLeave', [LeaveModelController::class, 'ApplyLeave'])->name('applyLeave');
     });

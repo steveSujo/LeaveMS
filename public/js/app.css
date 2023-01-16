@@ -1,0 +1,8 @@
+::root {
+    --bg-color: lime;
+}
+
+body {
+    background-color: var(--bb-color);
+}
+

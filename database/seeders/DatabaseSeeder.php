@@ -42,7 +42,7 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
-        LeaveModel::factory(10)->create();
+        LeaveModel::factory(20)->create();
 
         leaveType::create(
             [
