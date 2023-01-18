@@ -11,25 +11,23 @@ class CustomAuthController extends Controller
     {
         if ($request->route()->named('admin.login')) {
             return view('auth.AdminLogin');
-        } elseif ($request->route()->named('user.login')) {
-            return view('auth.EmployeeLogin');
         }
-        return view('landing');
+        return view('auth.EmployeeLogin');
     }
 
 
     public function AdminAuth(Request $request)
     {
-        $credit = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => 'required',
-        ]);
-
+        // $credit = $request->validate([
+        //     'email' => ['required', 'email'],
+        //     'password' => 'required',
+        // ]);
+        $credit = array('email' => 'admin@tim.com', 'password' => 'admin');
         if (Auth::guard('admin')->attempt($credit)) {
             return redirect()->intended('/admin/dashboard');
         };
 
-        return view('landing');
+        return view('auth.EmployeeLogin');
     }
 
     public function EmployeeAuth(Request $request)

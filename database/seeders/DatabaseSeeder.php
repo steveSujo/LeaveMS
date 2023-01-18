@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Employees;
 use App\Models\LeaveModel;
 use App\Models\leaveType;
 use App\Models\User;
@@ -33,16 +34,8 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@tim.com',
             'password' => Hash::make('admin'),
         ]);
-        LeaveModel::create(
-            [
-                'employee_id' => $emp->id,
-                'days' => 7,
-                'approved' => 0,
-                'approved_by' => null,
-            ]
-        );
 
-        LeaveModel::factory(10)->create();
+        Employees::factory(10)->create();
 
         leaveType::create(
             [
@@ -58,7 +51,16 @@ class DatabaseSeeder extends Seeder
             'type' => 'Full-time',
             'days' => 24
         ]);
-        $emp->type = 1;
+        LeaveModel::factory(10)->create();
+        LeaveModel::create(
+            [
+                'employee_id' => $emp->id,
+                'days' => 7,
+                'type_id' => 1,
+                'approved' => 0,
+                'approved_by' => null,
+            ]
+        );
         $emp->save();
     }
 }

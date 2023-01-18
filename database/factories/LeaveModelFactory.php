@@ -16,6 +16,7 @@ class LeaveModelFactory extends Factory
         return [
             'employee_id' => 1,
             'days' => random_int(3, 70),
+            'type_id' => random_int(1, 3),
             'approved' => null,
             'approved_by' => null,
         ];

@@ -16,6 +16,7 @@ class CreateLeaveModelsTable extends Migration
         Schema::create('leave_models', function (Blueprint $table) {
             $table->id();
             $table->foreignId('employee_id')->constrained('users');
+            $table->foreignId('type_id')->constrained('leave_types');
             $table->smallInteger('days');
             $table->string('approved')->nullable();
             $table->foreignId('approved_by')->nullable()->constrained('admin');

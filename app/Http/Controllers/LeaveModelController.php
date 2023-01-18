@@ -3,12 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Mail\NewEmployeeFrom;
+use App\Models\Employees;
 use App\Models\LeaveModel;
 use App\Models\leaveType;
 use App\Models\User;
+use Carbon\Carbon;
+use Carbon\CarbonInterface;
+use Carbon\CarbonInterval;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+
 
 class LeaveModelController extends Controller
 {
@@ -73,9 +79,24 @@ class LeaveModelController extends Controller
 
     public function EmployeeList()
     {
-        $data["list"] = User::leftJoin('leave_types', 'leave_types.id', '=', 'users.type')->select('users.id as id', 'name', 'email', 'leave_types.type')->get();
-        $data['typeList'] = leaveType::select('id', 'type')->get();
+        $data["staff_data"] = User::select('id', 'name', 'email')->get();
+        // $data['staff_data'] = leaveType::select('id', 'type')->get();
+
         return view('adminView.EmployeeList', $data);
+    }
+    public function adminDash()
+    {
+        //TODO new function adminDash
+        $data["employeeList"] = json_encode(Employees::select('Team', DB::raw('count(Team) as count'))->groupBy('Team')->get());
+
+        $data["employeeCount"] = Employees::all()->count();
+        $data["PendingLeave"] = LeaveModel::where('approved', null)->join('users', 'users.id', '=', 'leave_models.employee_id')->join('leave_types', 'leave_types.id', '=', 'leave_models.type_id')->select('leave_models.id', 'users.name', 'leave_types.type', 'approved', 'approved_by', 'leave_models.created_at')->orderby('leave_models.created_at')->take(3)->get();
+
+        foreach ($data["PendingLeave"] as $value) {
+            // $value->created_at = Carbon::diff($value->created_at, true);
+            $value['interval'] = Carbon::parse($value->created_at)->diffAsCarbonInterval()->forHumans(['join' => true, 'syntax' => CarbonInterface::DIFF_RELATIVE_TO_NOW, 'options' => CarbonInterface::NO_ZERO_DIFF, 'parts' => 1]);
+        }
+        return view('adminView.AdminDashboard', $data);
     }
     public function CRUDEmp(Request $request, User $emp)
     {
